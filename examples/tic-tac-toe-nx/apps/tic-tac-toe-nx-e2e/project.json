@@ -1,0 +1,30 @@
+{
+  "name": "tic-tac-toe-nx-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/tic-tac-toe-nx-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/tic-tac-toe-nx-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "tic-tac-toe-nx:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "tic-tac-toe-nx:serve:production"
+        },
+        "ci": {
+          "devServerTarget": "tic-tac-toe-nx:serve-static"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["tic-tac-toe-nx"]
+}

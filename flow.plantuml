@@ -1,0 +1,60 @@
+@startuml Use case flow diagram
+
+component MyAngularComponent [
+**MyAngularComponent**
+- onViewInit()
+- onClickOnSomething()
+]
+    component OtherUseCaseContext [
+        **OtherUseCaseContext**
+      ]
+package "Use Case Context" {
+    component UseCaseContextService [
+        **UseCaseContextService**
+        - getXy(): Observable<Readonly<MyViewModel>>
+        - onSomeActionX()
+        - onSomeOtherActionY()
+      ]
+    package "State" {
+      component StateService [
+        **StateService**
+        - private rootEntity: BehaviourSubject<RootEntity>
+        - get(): Observable<RootEntity
+      ]
+      component RootEntity [
+        **RootEntity**
+        - init()
+        - toViewModel()
+      ]
+      component Entity1 [
+        **Entity1**
+        - init()
+        - toViewModel()
+      ]
+      component Entity2 [
+        **Entity2**
+        - init()
+        - toViewModel()
+      ]
+    }
+    package "Backend" {
+        component BackendService [
+            **Backend service**
+            - getX()
+            - getY()
+        ]
+    }
+}
+[StateService] --> [RootEntity]
+[RootEntity] --> [Entity1]
+[RootEntity] --> [Entity2]
+
+[UseCaseContextService] --> [StateService]
+[UseCaseContextService] --> [BackendService]
+
+[MyAngularComponent] --> [UseCaseContextService] : sync invoke on some action on ui
+[UseCaseContextService] ... [MyAngularComponent] : async Observable stream emit 
+
+[UseCaseContextService] --> [OtherUseCaseContext]
+ 
+@enduml
