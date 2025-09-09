@@ -1,5 +1,5 @@
 # Use Case Context Pattern
-A better battle tested way to handle frontend states in modern angular webapplications.
+A battle tested, easy way to handle frontend states in modern angular webapplications.
 
 ## Components
 
