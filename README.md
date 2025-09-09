@@ -1,78 +1,70 @@
-Components:
+# Components
 
-    context
+- **context**
+- **entity**
+- **viewmodel(s)**
+- **state**
+- **backend(s)**
 
-    entity
+![Architecture Diagram](https://github.com/user-attachments/assets/8bc51885-20a5-4cc7-84f7-8d28ab0cef04)
 
-    viewmodel(s)
+---
 
-    state
+## Context
 
-    backend(s)
+### Responsibilities
+- Main interaction point between the Angular component and the business logic  
+- Calls other contexts  
+- Calls backends  
+- Calls state with actions  
+- All the state getters should be grouped in the first part of the context file  
 
-<img width="924" height="828" alt="image" src="https://github.com/user-attachments/assets/8bc51885-20a5-4cc7-84f7-8d28ab0cef04" />
-Context
-Responsibilities
+### Hard Rules
+- Context can only have interfaces in the constructor  
+- Context cannot have any parent class  
+- Context cannot return entity, only **VM = ViewModel**
 
-    main interaction point between the angular component and the business logic
+---
 
-    calls other contexts
+## Entity
 
-    calls backends
+### Responsibilities
+- Contains the business logic for mutating the current state  
+- Exposes interface for the possible actions which result in the mutation  
 
-    calls state with actions
+### Hard Rules
+- Entity internal state cannot be modified from the outside  
+- Entity stores the data as **VM instances**
 
-    all the state getters should be grouped in the first part of the context file
+---
 
-Hard rules
+## ViewModel
 
-    context can only have interfaces in the constructor
-    context cannot have any parent class
-    context cannot return entity, only VM = ViewModel
+### Responsibilities
+- Contains view-related information  
 
-Entity
-Responsibilities
+### Hard Rules
+- Everything coming out from this layer must be wrapped in `Readonly<>` TypeScript utility type  
 
-    contains the business logic for mutating the current state 
+---
 
-    exposes interface for the possible actions which result the mutation
+## State
 
-Hard rules
+### Responsibilities
+- Storing new values  
+- Proxying actions toward the entity to mutate the state  
+- Distributing new values  
 
-    entity internal state cannot modified from the outside
-    entity stores the data as VM instances
+### Hard Rules
+- Everything coming out from this layer must be wrapped in `Readonly<>` TypeScript utility type  
 
-ViewModel
-Responsibilities
+---
 
-    contains view related informations
+## Backend
 
-Hard rules
+### Responsibilities
+- Communication point between different system components  
+- Convert the response to the expected format, which is a DTO in that context  
 
-    everything coming out from this layer must be wrapped in Readonly<> ts utility type
-
-State
-Responsibilities
-
-    storing new values
-
-    proxying actions toward the entity to mutate the state
-
-    distributing new values
-
-Hard rules
-
-    everything coming out from this layer must be wrapped in Readonly<> ts utility type
-
-Backend
-
-Responsibilities
-
-    communication point between different system components
-
-    convert the response to the expected format which is a DTO that in that context
-
-Hard rules
-
-    it must use the base class for the actual communication
-
+### Hard Rules
+- It must use the base class for the actual communication  
