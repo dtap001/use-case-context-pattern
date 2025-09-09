@@ -1,4 +1,7 @@
-# Components
+# Use Case Context Pattern
+A better battle tested way to handle frontend states in modern angular webapplications.
+
+## Components
 
 - **context**
 - **entity**
